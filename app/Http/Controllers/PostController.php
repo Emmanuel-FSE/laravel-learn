@@ -24,10 +24,12 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $validated->title;
         $post->body = $validated->body;
-        $post->addMediaFromRequest('image')->toMediaCollection();
+        if ($request->hasFile('image')) {
+            $post->addMediaFromRequest('image')->toMediaCollection();
+        }
+
         $post->save();
 
         return redirect('/home');
-
     }
 }
